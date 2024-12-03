@@ -157,4 +157,87 @@ FROM highest_grossing_movies
 WHERE title LIKE ('Beauty and the Beast%');
 ```
 Result:  
-![highest_grossing_duplicates_fixed](https://github.com/user-attachments/assets/db5e607e-373f-470d-a0ff-be810a7cf6aa)
+![highest_grossing_duplicates_fixed](https://github.com/user-attachments/assets/db5e607e-373f-470d-a0ff-be810a7cf6aa)	
+## 5. Removing Corrupt Data Entries
+Some columns may have corrupt data entries which is incompatible for later analysis. In this section, we will check fincial columns such as `budget`, `domestic_opening`,` domestic_sales`, and `international_sales`.
+```
+-- There are some incorrect value inside some columns such as column: budget
+
+SELECT title, year, budget, domestic_opening, domestic_sales, international_sales
+FROM highest_grossing_movies;
+
+```
+Result:	
+![highest_grossing_corrupted_entries](https://github.com/user-attachments/assets/dfc79886-2439-4988-9a38-fbf245016026)	
+
+The `budget` column has some incorrect values. Let's check how many movies have this problem. It is important to have this column with correct values for any future analysis. If that is not the case, we have to remove those movies from our table so that we can gain valuable insight into the remaining movies.	
+```
+SELECT *
+FROM highest_grossing_movies
+WHERE budget NOT REGEXP '^[0-9]+$';
+-- 204 rows have corrupted fields for the budget column
+
+-- for the sake of later analysis lets remove movies with corrupt entries for budget column
+
+DELETE FROM highest_grossing_movies
+WHERE budget NOT REGEXP '^[0-9]+$';
+```
+
+## 6. Simple Insights into Movies Dataset
+Before some example analysis, let's make sure that columns `domestic_sales`, and `international_sales` sums up as column `worldwide_sales`
+Given this data, let's check if there is any movie in which there was no profit or the filmmaker lost. This means the movie `budget` has to be greater than the sum of `domestic_opening` and `worldwide_sales`.
+Check if there is any `NULL` values
+```
+SELECT *
+FROM highest_grossing_movies
+WHERE domestic_sales IS NULL;
+```
+Result:	
+![image](https://github.com/user-attachments/assets/fa20fda6-fd95-4b58-b3a4-53859442f53e)
+
+
+```
+SELECT *
+FROM highest_grossing_movies
+WHERE budget > (domestic_opening + worldwide_sales);
+
+```
+Result:	
+![highest_grossing_profit_loss](https://github.com/user-attachments/assets/3e5336a6-e53b-4f03-9ae1-654364662f00)
+
+We can check for every possible business insight using a large pool of SQL queries.  The following are just few of them.
+
+```
+SELECT title, (domestic_opening + domestic_sales + international_sales) AS total_sales
+FROM highest_grossing_movies;
+
+SELECT *, ((domestic_opening + domestic_sales + international_sales) - budget) AS profit
+FROM highest_grossing_movies
+ORDER BY profit DESC
+LIMIT 10;
+```
+Result: Top ten high-profit movies	
+![highest_grossing_profit_loss_top10](https://github.com/user-attachments/assets/b4984599-c92c-4563-8f13-b902552af6e9)
+
+Some movies may have the same release date
+```
+-- Date data type in realease_date
+SELECT release_date, GROUP_CONCAT(title SEPARATOR ', ') AS movies_released_inthis_date
+FROM highest_grossing_movies
+GROUP BY release_date
+HAVING COUNT(*) > 1;
+```
+Result:
+![image](https://github.com/user-attachments/assets/7558f10c-19e5-44e1-8f6b-d5ff9639b2a3)
+
+```
+SELECT *
+FROM highest_grossing_movies
+WHERE title IN ('The Others','American Pie 2');
+
+```
+Result:	
+![image](https://github.com/user-attachments/assets/1d8c3656-5ab1-45e8-9e4e-99e9a897bc5a)
+
+## 7. Conclusion
+In this project, we have demonstrated some data preparation methods using SQL queries. In the next project, we will dive into further data analysis.
