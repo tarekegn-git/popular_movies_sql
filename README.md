@@ -1,1 +1,1 @@
-SQL Project for top 1000 movies dataset.
+Dataset Preparation Project for top 1000 movies dataset using SQL queries. [Click Here](https://github.com/tarekegn-git/popular_movies_sql/blob/main/data_preparation_mysql.md) to follow step by step activity.
