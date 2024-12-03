@@ -1,4 +1,4 @@
-# Data Preparation
+# Data Preparation: Top 1000 Popular Hollywood Movies
 In this project, we will do  data cleaning and preparation for further analysis
 ## Dataset Description
 This dataset obtained from the [Kaggle](https://www.kaggle.com/datasets/sanjeetsinghnaik/top-1000-highest-grossing-movies) contains information about the top 1000 highest-grossing Hollywood movies. The database is organized with 14 columns and over 970 movie entries. Columns contain information about the movie title, release year, release date, budget, worldwide sales, license, etc. Each row represents a movie entry.
