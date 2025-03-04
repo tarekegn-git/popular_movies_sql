@@ -240,4 +240,4 @@ Result:
 ![image](https://github.com/user-attachments/assets/1d8c3656-5ab1-45e8-9e4e-99e9a897bc5a)
 
 ## 7. Conclusion
-In this project, we have demonstrated some data preparation methods using SQL queries. In the next project, we will dive into further data analysis.
+In this project, we have demonstrated some of the main data preparation tasks using SQL queries and SQL data manipulation techniques to alter the data table and performed some data access queries to analyse the top movies database. For this project, we used MySQL database management software. 
