@@ -7,7 +7,7 @@ In this project, we will prepare the dataset to make it suitable for analysis. T
 ## 1. Loading the Dataset Renaming the Table
   The original name for the table is like `highest holywood grossing movies`   
   which is inconvenient to work with because of spaces and long name, so let's rename it into top_movies:
-```
+```sql
 RENAME TABLE `highest holywood grossing movies` TO `top_movies`;
 ```
 Now we have renamed the original data into `top_movies` let's look into the dataset for the first time:
