@@ -67,7 +67,7 @@ Result:
 ![highest_grossing_column_renamed](https://github.com/user-attachments/assets/f57ca9e5-8b60-4752-8316-c20369d7da40)  
 Now, all columns follow the same naming standard and this is helpful during subsequent tasks that involve complex queries.
 ## 4. Duplicate Entries
-Before any further analysis, checking for duplicate data entries is very important. In this section, we will look into duplicate entries and fix them accordingly. For this purpose, we use SQL `DISTINCT` keyword and `COUNT` keyword to return the total number of movie titles.  
+Before any further analysis, checking for duplicate data entries is very important. In this section, we will look into duplicate entries and fix them accordingly. For this purpose, we use SQL `DISTINCT` and `COUNT` keywords to return the total number of movie titles.  
 ```
 SELECT COUNT(title) AS entire_title_count
 FROM highest_grossing_movies;
@@ -101,9 +101,9 @@ WHERE row_num > 1;
 
 Result:  
 ![highest_grossing_duplicates](https://github.com/user-attachments/assets/e65cea25-9691-4949-97d3-79ee2e618ce0)
-The result shows some movies have duplicate entries but we can't confirm that since some movies may have similar titles with different release years. To check this scenario lets get title and realese year of the movie `Aladdin` and `Beauty and the Beast using` using `WHERE` keyword as follows:  
+The result shows that some movies have duplicate entries, but we can't confirm that since some movies may have similar titles with different release years. To check this scenario, let's get the title and release year of the movies `Aladdin` and `Beauty and the Beast using the` using `WHERE` keyword as follows:  
 ```
--- Let's check the Aladin movie with 2 row entries to confirm
+-- Let's check the Aladdin movie with 2-row entries to confirm
 SELECT title, year
 FROM highest_grossing_movies
 WHERE title = 'Aladdin';
@@ -112,7 +112,7 @@ WHERE title = 'Aladdin';
 Aladdin, 2019
 Aladdin, 1992
 
--- It looks like there are two distinct movies titled Aladdin with different release years. let's check others
+-- there are two distinct movies titled Aladdin with different release years. Let's check others
 
 SELECT title, year
 FROM highest_grossing_movies
@@ -123,7 +123,7 @@ Beauty and the Beast, 2017
 Beauty and the Beast, 1991
 
 ```
-Therefore, we need to rename the title of one of the pair movies so they won't be counted as duplicates. To do so we assume the latest movie is a sequel or remake of an older movie. For instance, we assume Aladdin, 2019 is a remake of Aladdin, 1992. So we will rename the latest movie by adding 2 in front of its title( ex. Aladdin, 2019 renamed as Aladdin 2 and so on).  The following query does just that:
+Therefore, we need to rename the title of one of the pair movies so they won't be counted as duplicates. To do so, we assume the latest movie is a sequel or remake of an older movie. For instance, we assume Aladdin (2019 is a remake of Aladdin (1992. So we will rename the latest movie by adding 2 in front of its title( ex. Aladdin, 2019 renamed as Aladdin 2, and so on).  The following query does just that:
 ```
 UPDATE highest_grossing_movies h1
 JOIN (SELECT `title`, MIN(`year`) AS first_release_year
@@ -161,7 +161,7 @@ Result:
 ## 5. Removing Corrupt Data Entries
 Some columns may have corrupt data entries which is incompatible for later analysis. In this section, we will check fincial columns such as `budget`, `domestic_opening`,` domestic_sales`, and `international_sales`.
 ```
--- There are some incorrect value inside some columns such as column: budget
+-- There are some incorrect values inside some columns, such as column name budget
 
 SELECT title, year, budget, domestic_opening, domestic_sales, international_sales
 FROM highest_grossing_movies;
@@ -177,16 +177,16 @@ FROM highest_grossing_movies
 WHERE budget NOT REGEXP '^[0-9]+$';
 -- 204 rows have corrupted fields for the budget column
 
--- for the sake of later analysis lets remove movies with corrupt entries for budget column
+-- for the sake of later analysis, lets remove movies with corrupt entries for the budget column
 
 DELETE FROM highest_grossing_movies
 WHERE budget NOT REGEXP '^[0-9]+$';
 ```
 
 ## 6. Simple Insights into Movies Dataset
-Before some example analysis, let's make sure that columns `domestic_sales`, and `international_sales` sums up as column `worldwide_sales`
+Before some example analysis, let's make sure that columns `domestic_sales` and `international_sales` sum up as column `worldwide_sales`
 Given this data, let's check if there is any movie in which there was no profit or the filmmaker lost. This means the movie `budget` has to be greater than the sum of `domestic_opening` and `worldwide_sales`.
-Check if there is any `NULL` values
+Check if there are any `NULL` values
 ```
 SELECT *
 FROM highest_grossing_movies
@@ -233,7 +233,7 @@ Result:
 ```
 SELECT *
 FROM highest_grossing_movies
-WHERE title IN ('The Others','American Pie 2');
+WHERE title IN ('The Others',' American Pie 2');
 
 ```
 Result:	
